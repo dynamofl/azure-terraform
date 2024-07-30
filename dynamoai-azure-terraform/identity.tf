@@ -1,3 +1,5 @@
+# identity.tf
+
 resource "azurerm_user_assigned_identity" "workload_identity" {
   name                = var.user_assigned_identity_name
   resource_group_name = azurerm_resource_group.rg.name
