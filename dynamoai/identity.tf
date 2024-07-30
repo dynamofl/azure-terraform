@@ -11,3 +11,9 @@ resource "azurerm_role_assignment" "storage_blob_data_contributor" {
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_user_assigned_identity.workload_identity.principal_id
 }
+
+resource "azurerm_role_assignment" "postgresql_contributor" {
+  scope                = azurerm_postgresql_flexible_server.postgresql.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.workload_identity.principal_id
+}
