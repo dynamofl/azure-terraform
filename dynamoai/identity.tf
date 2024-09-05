@@ -17,3 +17,9 @@ resource "azurerm_role_assignment" "postgresql_contributor" {
   role_definition_name = "Contributor"
   principal_id         = azurerm_user_assigned_identity.workload_identity.principal_id
 }
+
+resource "azurerm_role_assignment" "storage_file_data_smb_contributor" {
+  scope                = azurerm_storage_account.storage_account.id
+  role_definition_name = "Storage File Data SMB Share Contributor"
+  principal_id         = azurerm_user_assigned_identity.workload_identity.principal_id
+}

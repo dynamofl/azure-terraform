@@ -41,6 +41,18 @@ variable "rds_subnet_prefixes" {
   default     = ["20.1.0.0/16"]
 }
 
+variable "gateway_subnet_name" {
+  type        = string
+  description = "The name of the gateway subnet"
+  default     = "gateway-subnet"
+}
+
+variable "gateway_subnet_prefixes" {
+  type        = list(string)
+  description = "Address prefixes for the gateway subnet"
+  default     = ["20.2.0.0/16"]
+}
+
 variable "cluster_name" {
   type        = string
   description = "The name of the AKS cluster"
@@ -121,6 +133,12 @@ variable "storage_size_mb" {
   type        = number
 }
 
+variable "azurerm_postgresql_require_secure_transport" {
+  description = "require_secure_transport config of the PostgreSQL server"
+  type        = string
+  default     = "require_secure_transport"
+}
+
 variable "storage_account_name" {
   description = "The name of the storage account"
   type        = string
@@ -144,4 +162,58 @@ variable "storage_account_tier" {
 
 variable "user_assigned_identity_name" {
   description = "The name of the user-assigned managed identity"
+}
+
+variable "frontend_ip_configuration_name" {
+  description = "The name of the frontend IP configuration for the Application Gateway"
+  type        = string
+  default     = "appGatewayFrontendIP"
+}
+
+variable "frontend_port_name" {
+  description = "The name of the frontend port for the Application Gateway"
+  type        = string
+  default     = "appGatewayFrontendPort"
+}
+
+variable "http_listener_name" {
+  description = "The name of the HTTP listener for the Application Gateway"
+  type        = string
+  default     = "appGatewayHttpListener"
+}
+
+variable "backend_address_pool_name" {
+  description = "The name of the backend address pool for the Application Gateway"
+  type        = string
+  default     = "applicationGatewayBackendAddressPool"
+}
+
+variable "backend_http_settings_name" {
+  description = "The name of the backend HTTP settings for the Application Gateway"
+  type        = string
+  default     = "appGatewayBackendHttpSettings"
+}
+
+variable "request_routing_rule_name" {
+  description = "The name of the request routing rule for the Application Gateway"
+  type        = string
+  default     = "appGatewayRule"
+}
+
+variable "gateway_ip_configuration_name" {
+  description = "The name of the gateway IP configuration for the Application Gateway"
+  type        = string
+  default     = "appGatewayIpConfig"
+}
+
+variable "ingress_application_gateway_name" {
+  description = "The name of the Application Gateway"
+  type        = string
+  default     = "ingress-appgateway"
+}
+
+variable "ingress_application_public_ip_name" {
+  description = "The name of the public IP for the Application Gateway"
+  type        = string
+  default     = "ingress-appgateway-ip"
 }
