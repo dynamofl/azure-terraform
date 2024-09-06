@@ -25,7 +25,6 @@ resource "azurerm_kubernetes_cluster" "main" {
     min_count                    = var.min_count
     max_count                    = var.max_count
     node_public_ip_enabled       = false
-    only_critical_addons_enabled = true
 
     upgrade_settings {
       max_surge                     = "10%"
@@ -41,20 +40,25 @@ resource "azurerm_kubernetes_cluster" "main" {
     ]
   }
 
-  # Enable OIDC issuer
   oidc_issuer_enabled = true
 
-  # Enable workload identity
   workload_identity_enabled = true
 
-  ingress_application_gateway {
-    gateway_id   = azurerm_application_gateway.ingress.id
-    gateway_name = azurerm_application_gateway.ingress.name
+  service_mesh_profile {
+    mode = "Istio"
+    internal_ingress_gateway_enabled = false
+    external_ingress_gateway_enabled = true
+    revisions = [
+      "asm-1-21"
+    ]
   }
 
-  # Workload AutoScaler Profile
   workload_autoscaler_profile {
     keda_enabled = true
+  }
+
+  network_profile {
+    network_plugin = "azure"
   }
 }
 

@@ -139,6 +139,18 @@ variable "azurerm_postgresql_require_secure_transport" {
   default     = "require_secure_transport"
 }
 
+variable "postgresql_database_dynamofl_name" {
+  description = "The name of the dynamofl postgres db"
+  type        = string
+  default     = "dynamofl"
+}
+
+variable "postgresql_database_keycloak_name" {
+  description = "The name of the keycloak postgres db"
+  type        = string
+  default     = "keycloak"
+}
+
 variable "storage_account_name" {
   description = "The name of the storage account"
   type        = string
