@@ -5,6 +5,11 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
 }
 
+data "azurerm_container_registry" "container_registry" {
+  name                = var.acr_name
+  resource_group_name = var.acr_resource_group_name
+}
+
 # Azure Kubernetes Service (AKS) Cluster
 resource "azurerm_kubernetes_cluster" "main" {
   name                = var.cluster_name
@@ -25,6 +30,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     min_count                    = var.min_count
     max_count                    = var.max_count
     node_public_ip_enabled       = false
+    os_sku                       = "Ubuntu"
 
     upgrade_settings {
       max_surge                     = "10%"
@@ -65,7 +71,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 resource "azurerm_kubernetes_cluster_node_pool" "userpool" {
   name                   = "userpool"
   kubernetes_cluster_id  = azurerm_kubernetes_cluster.main.id
-  vm_size                = "Standard_D8ds_v5"
+  vm_size                = "Standard_D16ds_v5"
   os_disk_size_gb        = 128
   vnet_subnet_id         = azurerm_subnet.aks_subnet.id
   max_pods               = 110
@@ -79,7 +85,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "userpool" {
 
 
 resource "azurerm_kubernetes_cluster_node_pool" "gpu1a10" {
-  name                   = "gpunp48"
+  name                   = "gpunp48a10"
   kubernetes_cluster_id  = azurerm_kubernetes_cluster.main.id
   vm_size                = "Standard_NV36ads_A10_v5"
   os_disk_size_gb        = 128
@@ -90,22 +96,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "gpu1a10" {
   auto_scaling_enabled   = true
   min_count              = 0
   max_count              = 8
-  node_public_ip_enabled = false
-  node_taints            = ["nvidia.com/gpu=true:NoSchedule", "gpu-type=a10g:NoSchedule"]
-}
-
-resource "azurerm_kubernetes_cluster_node_pool" "gpu2a10" {
-  name                   = "gpunp48"
-  kubernetes_cluster_id  = azurerm_kubernetes_cluster.main.id
-  vm_size                = "Standard_NV72ads_A10_v5"
-  os_disk_size_gb        = 128
-  os_disk_type           = "Ephemeral"
-  vnet_subnet_id         = azurerm_subnet.aks_subnet.id
-  max_pods               = 30
-  zones                  = ["1", "2", "3"]
-  auto_scaling_enabled   = true
-  min_count              = 0
-  max_count              = 4
   node_public_ip_enabled = false
   node_taints            = ["nvidia.com/gpu=true:NoSchedule", "gpu-type=a10g:NoSchedule"]
 }

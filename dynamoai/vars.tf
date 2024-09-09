@@ -103,6 +103,18 @@ variable "dns_zone_virtual_network_link_name" {
   default     = "dynamoaiprivatelink"
 }
 
+variable "acr_name" {
+  description = "The name of the ACR"
+  type        = string
+  default     = "dynamoaimarketplace"
+}
+
+variable "acr_resource_group_name" {
+  description = "The name of the resource group of ACRk"
+  type        = string
+  default     = "Azure_Marketplace_RG"
+}
+
 variable "postgresql_server_name" {
   description = "Name of the PostgreSQL server"
   type        = string
