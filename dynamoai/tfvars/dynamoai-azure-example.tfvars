@@ -3,9 +3,9 @@ location            = "East US"
 vnet_name           = "dynamoai-vnet"
 aks_subnet_name     = "dynamoai-aks-subnet"
 rds_subnet_name     = "dynamoai-rds-subnet"
-address_space       = ["20.0.0.0/8"]
-aks_subnet_prefixes = ["20.0.0.0/16"]
-rds_subnet_prefixes = ["20.1.0.0/16"]
+address_space       = ["20.0.0.0/16"]
+aks_subnet_prefixes = ["20.0.1.0/24"]
+rds_subnet_prefixes = ["20.0.2.0/24"]
 cluster_name        = "dynamoai-tf-test"
 dns_prefix          = "dynamoai-aks"
 agent_vm_size       = "Standard_D4pds_v5"
@@ -23,7 +23,7 @@ sku_name                             = "GP_Standard_D4s_v3"
 storage_size_mb                      = 131072
 
 storage_account_name      = "dynamoaitftest"
-storage_account_sku       = "ZRS"
+storage_account_sku       = "LRS"
 storage_account_tier      = "Hot"
 
 container_name                    = "container-tf"
