@@ -39,17 +39,17 @@ resource "azurerm_postgresql_flexible_server_configuration" "require_secure_tran
 }
 
 resource "azurerm_postgresql_flexible_server_database" "dynamofl" {
-  name               = var.postgresql_database_dynamofl_name
-  server_id          = azurerm_postgresql_flexible_server.postgresql.id
-  charset            = "UTF8"
-  collation          = "en_US.utf8"
-  depends_on         = [azurerm_postgresql_flexible_server.postgresql]
+  name       = var.postgresql_database_dynamofl_name
+  server_id  = azurerm_postgresql_flexible_server.postgresql.id
+  charset    = "UTF8"
+  collation  = "en_US.utf8"
+  depends_on = [azurerm_postgresql_flexible_server.postgresql]
 }
 
 resource "azurerm_postgresql_flexible_server_database" "keycloak" {
-  name               = var.postgresql_database_keycloak_name
-  server_id          = azurerm_postgresql_flexible_server.postgresql.id
-  charset            = "UTF8"
-  collation          = "en_US.utf8"
-  depends_on         = [azurerm_postgresql_flexible_server.postgresql]
+  name       = var.postgresql_database_keycloak_name
+  server_id  = azurerm_postgresql_flexible_server.postgresql.id
+  charset    = "UTF8"
+  collation  = "en_US.utf8"
+  depends_on = [azurerm_postgresql_flexible_server.postgresql]
 }

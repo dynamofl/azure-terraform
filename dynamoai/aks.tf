@@ -17,6 +17,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.dns_prefix
   sku_tier            = "Standard"
+  kubernetes_version  = "1.30.0"
 
   default_node_pool {
     name                         = "agentpool"
@@ -31,6 +32,8 @@ resource "azurerm_kubernetes_cluster" "main" {
     max_count                    = var.max_count
     node_public_ip_enabled       = false
     os_sku                       = "Ubuntu"
+    only_critical_addons_enabled = true
+    temporary_name_for_rotation  = "pooltemp"
 
     upgrade_settings {
       max_surge                     = "10%"
@@ -40,10 +43,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   identity {
-    type = "UserAssigned"
-    identity_ids = [
-      azurerm_user_assigned_identity.workload_identity.id
-    ]
+    type = "SystemAssigned"
   }
 
   oidc_issuer_enabled = true
@@ -51,7 +51,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   workload_identity_enabled = true
 
   service_mesh_profile {
-    mode = "Istio"
+    mode                             = "Istio"
     internal_ingress_gateway_enabled = false
     external_ingress_gateway_enabled = true
     revisions = [
