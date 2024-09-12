@@ -1,5 +1,5 @@
 # identity.tf
-resource "azurerm_role_assignment" "aks_sp_container_registry" {
+resource "azurerm_role_assignment" "aks_container_registry" {
   scope                = data.azurerm_container_registry.container_registry.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id

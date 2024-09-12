@@ -46,8 +46,10 @@ resource "azurerm_kubernetes_cluster" "main" {
     type = "SystemAssigned"
   }
 
+  # Enable OIDC issuer
   oidc_issuer_enabled = true
 
+  # Enable workload identity
   workload_identity_enabled = true
 
   service_mesh_profile {
@@ -80,11 +82,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "userpool" {
   min_count              = 0
   max_count              = 20
   node_public_ip_enabled = false
-
 }
 
 
-resource "azurerm_kubernetes_cluster_node_pool" "gpu1a10" {
+resource "azurerm_kubernetes_cluster_node_pool" "gpunp48a10" {
   name                   = "gpunp48a10"
   kubernetes_cluster_id  = azurerm_kubernetes_cluster.main.id
   vm_size                = "Standard_NV36ads_A10_v5"
