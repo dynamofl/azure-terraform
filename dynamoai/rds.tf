@@ -26,7 +26,30 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
 
   storage_mb   = var.storage_size_mb
   storage_tier = "P30"
+  sku_name     = var.sku_name
+  depends_on   = [azurerm_private_dns_zone_virtual_network_link.postgresql_link]
+}
 
-  sku_name   = var.sku_name
-  depends_on = [azurerm_private_dns_zone_virtual_network_link.postgresql_link]
+resource "azurerm_postgresql_flexible_server_configuration" "require_secure_transport" {
+  name      = var.azurerm_postgresql_require_secure_transport
+  server_id = azurerm_postgresql_flexible_server.postgresql.id
+  value     = "OFF"
+
+  depends_on = [azurerm_postgresql_flexible_server.postgresql]
+}
+
+resource "azurerm_postgresql_flexible_server_database" "dynamofl" {
+  name       = var.postgresql_database_dynamofl_name
+  server_id  = azurerm_postgresql_flexible_server.postgresql.id
+  charset    = "UTF8"
+  collation  = "en_US.utf8"
+  depends_on = [azurerm_postgresql_flexible_server.postgresql]
+}
+
+resource "azurerm_postgresql_flexible_server_database" "keycloak" {
+  name       = var.postgresql_database_keycloak_name
+  server_id  = azurerm_postgresql_flexible_server.postgresql.id
+  charset    = "UTF8"
+  collation  = "en_US.utf8"
+  depends_on = [azurerm_postgresql_flexible_server.postgresql]
 }

@@ -31,15 +31,3 @@ output "storage_account_name" {
 output "container_name" {
   value = azurerm_storage_container.storage_container.name
 }
-
-output "user_assigned_identity_client_id" {
-  value = azurerm_user_assigned_identity.workload_identity.client_id
-}
-
-output "user_assigned_identity_principal_id" {
-  value = azurerm_user_assigned_identity.workload_identity.principal_id
-}
-
-output "user_assigned_identity_name" {
-  value = azurerm_user_assigned_identity.workload_identity.name
-}

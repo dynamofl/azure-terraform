@@ -41,6 +41,18 @@ variable "rds_subnet_prefixes" {
   default     = ["20.1.0.0/16"]
 }
 
+variable "gateway_subnet_name" {
+  type        = string
+  description = "The name of the gateway subnet"
+  default     = "gateway-subnet"
+}
+
+variable "gateway_subnet_prefixes" {
+  type        = list(string)
+  description = "Address prefixes for the gateway subnet"
+  default     = ["20.2.0.0/16"]
+}
+
 variable "cluster_name" {
   type        = string
   description = "The name of the AKS cluster"
@@ -91,6 +103,18 @@ variable "dns_zone_virtual_network_link_name" {
   default     = "dynamoaiprivatelink"
 }
 
+variable "acr_name" {
+  description = "The name of the ACR"
+  type        = string
+  default     = "dynamoaimarketplace"
+}
+
+variable "acr_resource_group_name" {
+  description = "The name of the resource group of ACRk"
+  type        = string
+  default     = "Azure_Marketplace_RG"
+}
+
 variable "postgresql_server_name" {
   description = "Name of the PostgreSQL server"
   type        = string
@@ -121,6 +145,24 @@ variable "storage_size_mb" {
   type        = number
 }
 
+variable "azurerm_postgresql_require_secure_transport" {
+  description = "require_secure_transport config of the PostgreSQL server"
+  type        = string
+  default     = "require_secure_transport"
+}
+
+variable "postgresql_database_dynamofl_name" {
+  description = "The name of the dynamofl postgres db"
+  type        = string
+  default     = "dynamofl"
+}
+
+variable "postgresql_database_keycloak_name" {
+  description = "The name of the keycloak postgres db"
+  type        = string
+  default     = "keycloak"
+}
+
 variable "storage_account_name" {
   description = "The name of the storage account"
   type        = string
@@ -140,8 +182,4 @@ variable "storage_account_tier" {
   description = "The access tier of the storage account"
   type        = string
   default     = "Hot"
-}
-
-variable "user_assigned_identity_name" {
-  description = "The name of the user-assigned managed identity"
 }
